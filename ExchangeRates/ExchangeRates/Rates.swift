@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Rates: View {
     @State var showEditRates = false
-    @State var rate: BaseRate.Base = .USD
+    @State var rate = Rate.init(baseRate: 1.00, exchangeRate: 1.23, baseSelect: .USD, convert2JPY: 100.00, convert2GBP: 0.94, convert2MXN: 20.00)
     
     var body: some View {
         NavigationView {
@@ -26,9 +26,9 @@ struct Rates: View {
                         Spacer()
                         Spacer()
                     }
-                    if rate == .USD {
+                    if rate.baseSelect == .USD {
                         Text("🇺🇸").font(.largeTitle)
-                    } else if rate == .EUR {
+                    } else if rate.baseSelect == .EUR {
                         Text("🇪🇺").font(.largeTitle)
                     }
                 }
@@ -46,10 +46,14 @@ struct Rates: View {
                         Spacer()
                         Spacer()
                     }
-                    if rate == .USD {
-                        Text("1 USD = X EUR").font(.largeTitle)
-                    } else if rate == .EUR {
-                        Text("1 EUR = X USD").font(.largeTitle)
+                    let base_rate = Double(round(100*rate.baseRate)/100)
+                    let bRate = String(format: "%.2f", base_rate)
+                    let exchange_rate = Double(round(100*rate.exchangeRate)/100)
+                    let eRate = String(format: "%.2f", exchange_rate)
+                    if rate.baseSelect == .USD {
+                        Text(bRate + " USD = " + eRate + " EUR").font(.largeTitle)
+                    } else if rate.baseSelect == .EUR {
+                        Text(bRate + " EUR = " + eRate + " USD").font(.largeTitle)
                     }
                 }
                 .padding()
