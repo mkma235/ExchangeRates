@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct Rates: View {
+    @State var showEditRates = false
+    @State var rate: BaseRate.Base = .USD
     
     var body: some View {
         NavigationView {
@@ -24,7 +26,11 @@ struct Rates: View {
                         Spacer()
                         Spacer()
                     }
-                    Text("🇺🇸").font(.largeTitle)
+                    if rate == .USD {
+                        Text("🇺🇸").font(.largeTitle)
+                    } else if rate == .EUR {
+                        Text("🇪🇺").font(.largeTitle)
+                    }
                 }
                 .padding()
                 Spacer()
@@ -40,7 +46,11 @@ struct Rates: View {
                         Spacer()
                         Spacer()
                     }
-                    Text("1 USD = X EUR").font(.largeTitle)
+                    if rate == .USD {
+                        Text("1 USD = X EUR").font(.largeTitle)
+                    } else if rate == .EUR {
+                        Text("1 EUR = X USD").font(.largeTitle)
+                    }
                 }
                 .padding()
                 Spacer()
@@ -66,11 +76,14 @@ struct Rates: View {
             .navigationTitle("Rates")
             .toolbar(content: {
                 Button(action: {
-                    print("Money!")
+                    showEditRates = true
                 }, label: {
                     Image(systemName: "centsign.circle")
                 })
             })
+            .sheet(isPresented: $showEditRates) {
+                EditRates(rate: $rate)
+            }
         }
     }
 }
