@@ -75,7 +75,7 @@ struct EditRates: View {
                     updateGraphPoint()
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
-                    Image(systemName: "centsign.circle.fill")
+                    Text("Rates")
                 })
             })
         }

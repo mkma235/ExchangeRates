@@ -88,7 +88,7 @@ struct Rates: View {
                     on = false
                     loadLatestRates()
                 }, label: {
-                    Image(systemName: "centsign.circle")
+                    Text("Sample")
                 })
             })
             .sheet(isPresented: $showEditRates) {
@@ -108,7 +108,7 @@ struct Rates: View {
         let symbols = "JPY,GBP,MXN,USD,CAD,EUR"
         let baseURL = "http://data.fixer.io/api/latest"
         let latestRateURL = baseURL + "?access_key=" + APIKey + "&base=" + baseRate + "&symbols=" + symbols
-        //http://data.fixer.io/api/latest?access_key=6fed17b8bdf432a8e7961275b7b5c2c0&base=EUR&symbols=GBP,JPY,USD
+        //http://data.fixer.io/api/latest?access_key=6fed17b8bdf432a8e7961275b7b5c2c0&base=EUR&symbols=USD
                 
         let defaultSession = URLSession(configuration: .default)
         var dataTask: URLSessionDataTask?
@@ -195,9 +195,9 @@ struct Rates: View {
             let index = Int(month.id)
             let defaultSession = URLSession(configuration: .default)
             var dataTask: URLSessionDataTask?
-            let historicalRatesURL = baseURL + dates[index] + "?access_key=" + APIKey + "&base=" + baseRate + "&symbols=" + symbols
+            let historicalRateURL = baseURL + dates[index] + "?access_key=" + APIKey + "&base=" + baseRate + "&symbols=" + symbols
             dataTask?.cancel()
-            guard let url = URL(string: historicalRatesURL) else { return }
+            guard let url = URL(string: historicalRateURL) else { return }
                         
             dataTask = defaultSession.dataTask(with: url) { data, response, error in
                         
