@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Rates: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @FetchRequest(entity: Month.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Month.id, ascending: true) ]) private var months: FetchedResults<Month>
+    @FetchRequest(entity: Month.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Month.date, ascending: true) ]) private var months: FetchedResults<Month>
     @State var showEditRates = false
     @State var on = false
     @State var rate = Rate.init(baseRate: 1.00, exchangeRate: 1.23, baseSelect: .EUR, convert2JPY: 100.00, convert2GBP: 0.94, convert2MXN: 20.00, convert2USD: 1.23, convert2CAD: 1.52)
@@ -168,10 +168,11 @@ struct Rates: View {
         var month = Int(dateArray[1])!
         year -= 1
         month += 1
-        for _ in 0..<12 {
+        months.forEach { monthIndex in
             let strMonth = String(format: "%02d", month)
             let strDate = "\(year)-" + strMonth + "-01"
             dates.append(strDate)
+            monthIndex.date = strDate
             if month == 12 {
                 year += 1
                 month = 0

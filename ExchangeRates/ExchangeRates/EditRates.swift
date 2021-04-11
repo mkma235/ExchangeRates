@@ -10,7 +10,7 @@ import SwiftUI
 struct EditRates: View {
     @Environment(\.managedObjectContext) private var viewContext
     @Environment (\.presentationMode) var presentationMode
-    @FetchRequest(entity: Month.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Month.id, ascending: true) ]) private var months: FetchedResults<Month>
+    @FetchRequest(entity: Month.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Month.date, ascending: true) ]) private var months: FetchedResults<Month>
     @State private var date = Date()
     @Binding var rate: Rate
     
@@ -80,15 +80,39 @@ struct EditRates: View {
             })
         }
     }
+    
     func updateGraphPoint() {
-        print("Save New Rate To Graph")
-        print(date)
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let datePicked = formatter.string(from: self.date)
-        print("TEST DATE PICKER FORMATTER: ")
-        print(datePicked)
-        print("LOADING GRAPH DATA!")
+        months.first?.date = datePicked
+        let APIKey = "6fed17b8bdf432a8e7961275b7b5c2c0"
+        let baseRate = "EUR"
+        let symbols = "USD"
+        let baseURL = "http://data.fixer.io/api/"
+        //http://data.fixer.io/api/2021-04-10?access_key=6fed17b8bdf432a8e7961275b7b5c2c0&base=EUR&symbols=USD
+        
+        let defaultSession = URLSession(configuration: .default)
+        var dataTask: URLSessionDataTask?
+        let historicalRatesURL = baseURL + datePicked + "?access_key=" + APIKey + "&base=" + baseRate + "&symbols=" + symbols
+        dataTask?.cancel()
+        guard let url = URL(string: historicalRatesURL) else { return }
+                        
+        dataTask = defaultSession.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let data = data {
+                var response: [String: Any]?
+                do {
+                    response = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                } catch _ as NSError { return }
+                guard let array = response!["rates"]! as? [String: Any] else { return }
+                DispatchQueue.main.async {
+                    months.first?.rate = array["USD"] as! Double
+                }
+            }
+        }
+        dataTask?.resume()
     }
 }
 
