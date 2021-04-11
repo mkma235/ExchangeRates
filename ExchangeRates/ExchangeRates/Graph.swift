@@ -57,7 +57,7 @@ struct Graph: View {
 
     var body: some View {
         VStack {
-            Text("Rate Exchange Over Time")
+            Text("Exchange Rates Last Year")
                 .font(.title3)
             HStack {
                 HStack {
@@ -107,7 +107,7 @@ struct Graph: View {
                 }
                 .padding()
             }
-            Text("Time(t)")
+            Text("Time (months)")
 
             Button("Show Rates") {
                 withAnimation(.easeInOut(duration: 2)) {

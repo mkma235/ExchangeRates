@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct EditRates: View {
+    @Environment(\.managedObjectContext) private var viewContext
     @Environment (\.presentationMode) var presentationMode
+    @FetchRequest(entity: Month.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Month.id, ascending: true) ]) private var months: FetchedResults<Month>
     @State private var date = Date()
     @Binding var rate: Rate
     
@@ -70,7 +72,7 @@ struct EditRates: View {
             .navigationTitle("Rate Sampling")
             .toolbar(content: {
                 Button(action: {
-                    loadGraphData()
+                    updateGraphPoint()
                     presentationMode.wrappedValue.dismiss()
                 }, label: {
                     Image(systemName: "centsign.circle.fill")
@@ -78,7 +80,7 @@ struct EditRates: View {
             })
         }
     }
-    func loadGraphData() {
+    func updateGraphPoint() {
         print("Save New Rate To Graph")
         print(date)
         let formatter = DateFormatter()

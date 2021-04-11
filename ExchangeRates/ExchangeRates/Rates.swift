@@ -8,9 +8,12 @@
 import SwiftUI
 
 struct Rates: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(entity: Month.entity(), sortDescriptors: [ NSSortDescriptor(keyPath: \Month.id, ascending: true) ]) private var months: FetchedResults<Month>
     @State var showEditRates = false
     @State var on = false
     @State var rate = Rate.init(baseRate: 1.00, exchangeRate: 1.23, baseSelect: .EUR, convert2JPY: 100.00, convert2GBP: 0.94, convert2MXN: 20.00, convert2USD: 1.23, convert2CAD: 1.52)
+    @State var graphPoints: [CGFloat] = []
     
     var body: some View {
         NavigationView {
@@ -72,7 +75,7 @@ struct Rates: View {
                         Spacer()
                         Spacer()
                     }
-                    Graph(on: $on, points: [0.5,1.5,2.0,0.75,1,0.5,0.25,1.5,0.5,1,0,2])
+                    Graph(on: $on, points: graphPoints)
                 }
                 .padding()
                 Spacer()
@@ -88,13 +91,16 @@ struct Rates: View {
                 })
             })
             .sheet(isPresented: $showEditRates) {
-                EditRates(rate: $rate)
+                EditRates(rate: $rate).environment(\.managedObjectContext, viewContext)
             }
             .onAppear(perform: {
                 loadLatestRates()
+                setUpCoreData()
+                setUpGraphPoints()
             })
         }
     }
+    
     func loadLatestRates() {
         let APIKey = "6fed17b8bdf432a8e7961275b7b5c2c0"
         let baseRate = "EUR"
@@ -131,6 +137,30 @@ struct Rates: View {
             }
         }
         dataTask?.resume()
+    }
+    
+    func setUpCoreData() {
+        if months.count == 12 {
+            return
+        }
+        for i in 0..<12 {
+            let month = Month(context: viewContext)
+            month.id = Int16(i)
+            month.rate = Double.random(in: 0...2)
+            month.date = "2021-04-10"
+        }
+        do {
+            try viewContext.save()
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func setUpGraphPoints() {
+        graphPoints = []
+        months.forEach { month in
+            graphPoints.append(CGFloat(month.rate))
+        }
     }
 }
 

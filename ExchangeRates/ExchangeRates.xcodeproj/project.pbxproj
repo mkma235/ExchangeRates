@@ -18,6 +18,8 @@
 		545DEE222621A94200EE369D /* EditRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545DEE212621A94200EE369D /* EditRates.swift */; };
 		545DEE302621B40500EE369D /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545DEE2F2621B40500EE369D /* Rate.swift */; };
 		54B3AE0C2621F2AC0045B39B /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3AE0B2621F2AC0045B39B /* Graph.swift */; };
+		54B3AE68262280FA0045B39B /* Month+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3AE66262280FA0045B39B /* Month+CoreDataClass.swift */; };
+		54B3AE69262280FA0045B39B /* Month+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3AE67262280FA0045B39B /* Month+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		545DEE212621A94200EE369D /* EditRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRates.swift; sourceTree = "<group>"; };
 		545DEE2F2621B40500EE369D /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
 		54B3AE0B2621F2AC0045B39B /* Graph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		54B3AE66262280FA0045B39B /* Month+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Month+CoreDataClass.swift"; sourceTree = "<group>"; };
+		54B3AE67262280FA0045B39B /* Month+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Month+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +118,8 @@
 				545DEDDD26217A5C00EE369D /* Persistence.swift */,
 				545DEDE226217A5C00EE369D /* Info.plist */,
 				545DEDDF26217A5C00EE369D /* ExchangeRates.xcdatamodeld */,
+				54B3AE66262280FA0045B39B /* Month+CoreDataClass.swift */,
+				54B3AE67262280FA0045B39B /* Month+CoreDataProperties.swift */,
 				545DEDDA26217A5C00EE369D /* Preview Content */,
 			);
 			path = ExchangeRates;
@@ -280,6 +286,8 @@
 				545DEE302621B40500EE369D /* Rate.swift in Sources */,
 				545DEDDE26217A5C00EE369D /* Persistence.swift in Sources */,
 				545DEDD526217A5800EE369D /* ExchangeRatesApp.swift in Sources */,
+				54B3AE69262280FA0045B39B /* Month+CoreDataProperties.swift in Sources */,
+				54B3AE68262280FA0045B39B /* Month+CoreDataClass.swift in Sources */,
 				545DEE222621A94200EE369D /* EditRates.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
