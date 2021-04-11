@@ -14,6 +14,7 @@ struct Rates: View {
     @State var on = false
     @State var rate = Rate.init(baseRate: 1.00, exchangeRate: 1.23, baseSelect: .EUR, convert2JPY: 100.00, convert2GBP: 0.94, convert2MXN: 20.00, convert2USD: 1.23, convert2CAD: 1.52)
     @State var graphPoints: [CGFloat] = []
+    @State var dates: [String] = []
     
     var body: some View {
         NavigationView {
@@ -156,10 +157,64 @@ struct Rates: View {
         }
     }
     
+    func configureNext12Dates() {
+        dates = []
+        let rate_date = Date()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let rdate = formatter.string(from: rate_date)
+        let dateArray = rdate.components(separatedBy: "-")
+        var year = Int(dateArray[0])!
+        var month = Int(dateArray[1])!
+        year -= 1
+        month += 1
+        for _ in 0..<12 {
+            let strMonth = String(format: "%02d", month)
+            let strDate = "\(year)-" + strMonth + "-01"
+            dates.append(strDate)
+            if month == 12 {
+                year += 1
+                month = 0
+            }
+            month += 1
+        }
+    }
+    
     func setUpGraphPoints() {
         graphPoints = []
+        let APIKey = "6fed17b8bdf432a8e7961275b7b5c2c0"
+        let baseRate = "EUR"
+        let symbols = "USD"
+        let baseURL = "http://data.fixer.io/api/"
+        //http://data.fixer.io/api/2021-04-10?access_key=6fed17b8bdf432a8e7961275b7b5c2c0&base=EUR&symbols=USD
+        configureNext12Dates()
+        
         months.forEach { month in
-            graphPoints.append(CGFloat(month.rate))
+            
+            let index = Int(month.id)
+            let defaultSession = URLSession(configuration: .default)
+            var dataTask: URLSessionDataTask?
+            let historicalRatesURL = baseURL + dates[index] + "?access_key=" + APIKey + "&base=" + baseRate + "&symbols=" + symbols
+            dataTask?.cancel()
+            guard let url = URL(string: historicalRatesURL) else { return }
+                        
+            dataTask = defaultSession.dataTask(with: url) { data, response, error in
+                        
+                if let error = error {
+                    print(error.localizedDescription)
+                } else if let data = data {
+                    var response: [String: Any]?
+                    do {
+                        response = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                    } catch _ as NSError { return }
+                    guard let array = response!["rates"]! as? [String: Any] else { return }
+                    DispatchQueue.main.async {
+                        month.rate = array["USD"] as! Double
+                        graphPoints.append(CGFloat(month.rate))
+                    }
+                }
+            }
+            dataTask?.resume()
         }
     }
 }
