@@ -52,7 +52,7 @@ struct RateTimeAxis: Shape {
 
 
 struct Graph: View {
-    @State var on = false
+    @Binding var on: Bool
     var points: [CGFloat]
 
     var body: some View {
@@ -126,6 +126,6 @@ struct Graph: View {
 
 struct Graph_Previews: PreviewProvider {
     static var previews: some View {
-        Graph(points: [0.5,1.5,2.0,0.75,1,0.5,0.25,1.5,0.5,1,0,2])
+        Graph(on: .constant(true), points: [0.5,1.5,2.0,0.75,1,0.5,0.25,1.5,0.5,1,0,2])
     }
 }
