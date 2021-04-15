@@ -1,5 +1,4 @@
-# ExchangeRates
-## Mariano Manuel
+# ExchangeRates - Mariano Manuel Keymurth
 
 ## (0)Synopsis
 
