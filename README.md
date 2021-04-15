@@ -1,9 +1,9 @@
 # ExchangeRates
 ## Mariano Manuel
 
-**Test Bold**
-*Test Italic*
-~~Test Strikethrough~~
+**Test Bold**  
+*Test Italic*  
+~~Test Strikethrough~~  
 
 ## (0)Synopsis
 
