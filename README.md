@@ -3,16 +3,16 @@
 
 ## (0)Synopsis
 
-**(0.1)To Compile:**
+**(0.1)To Compile:**  
 Type "command+B" in your Xcode project to compile the program.  
 
-**(0.2)To Run:**
+**(0.2)To Run:**  
 Type "command+R" in your Xcode project to run the program.  
 
-**(0.3)Input:**
+**(0.3)Input:**  
 There is no input needed to initiate the program. However, there is a Button and a DatePicker component. The button displays an Exchange Rates graph while the DatePicker is used to modify one of the dates displayed on the graph.  
 
-**(0.4)Output:**
+**(0.4)Output:**  
 There is a graph displaying the Exchange Rates from EUR to USD. In another view, there are multiple Conversion Rates displayed to the user.  
 
 ## (1)Included Files
@@ -42,11 +42,11 @@ It was pretty difficult to estimate which point in the graph is closest to the d
 
 ## (5)Example
 
-**(5.1)Input:**
+**(5.1)Input:**  
 There is no input needed to calculate the Exchange Rates, calculate the Conversion Rates, or display the graph. Simply press the red button.  
 DatePicker - select date and press 'Rates' button to update graph  
 
-**(5.2)Computation:**
+**(5.2)Computation:**  
 Graph points automattically calculated in the beginning. For loop creating a date of the first day of the month for each month in the previous year. API is called for each date to return the Exchange Rates for each month of the year. When modifying a date, a single API call is needed to calculate the value for the Exchange Rate. 'Rates' button deletes the oldest date and adds the custom date selected from the DatePicker. Five API calls are made to get the Conversion Rates from EUR to 5 different countries.  
 
 **(5.3)Output:**  
@@ -59,16 +59,16 @@ For XCTests, a URLSession is initiated along with providing 2 sample API URL for
 
 **(6.2)Tests:**  
 
-######	(6.2.1)testValidHTTPStatusCode200  
+######	(6.2.1)testValidHTTPStatusCode200
 This test makes an API call and the status code is tested. If the status code is a 200 code, then the test passes. The API call tested is the Latest Exchange Rate.  
 
-######	(6.2.2)testAPICallCompletes  
+######	(6.2.2)testAPICallCompletes
 This test makes an API call and the completion handler is tested. If the completion handler is invoked, then the test passes. The test also checks that no error was thrown. The API call tested is the Historical Exchange Rate.  
 
-######	(6.2.3)testRatesLayout  
+######	(6.2.3)testRatesLayout
 This test checks the UI/UX layout of the application. Specifically checking the layout of the first view. Various text is checked to see if they are properly displayed. The 'Show Rates' and 'Sample' button are checked to see if they are displayed also. If everything is displayed properly, the test passes.  
 
-######	(6.2.4)testNextViewLayout  
+######	(6.2.4)testNextViewLayout
 This test checks if the app can properly move from one view to another. The 'Sample'  button is tapped and then various text is checked to see if they are properly displayed. The DatePicker in the second view is checked for existence. If the XCUIApplication moves from one view to the next and properly displays UI/UX components, then the test passes.  
 
 **(6.3)Analysis:**  
